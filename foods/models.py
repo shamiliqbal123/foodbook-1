@@ -20,7 +20,7 @@ class MenuItem(models.Model):
     item_price = models.DecimalField(max_digits=5, decimal_places=2)
     category = models.ManyToManyField('Category', related_name='item')
     today_special=models.BooleanField(default=False)
-    popular_item=models.BooleanField(default=False)
+
 
 
     def __str__(self):
