@@ -3,7 +3,7 @@ from unicodedata import category
 from django.shortcuts import render
 from.models import MenuItem,Category,OrderItems,OrderStatus
 from .serializer import CategorySerializer, ItemSerialilzer, OrderSerialilzer, OrderItemSerializer, ordercreate, \
-    TodaySerializer, RegisterSerializer, PopularSerializer
+    TodaySerializer, RegisterSerializer, PopularSerializer, OfferSerializer
 from rest_framework.generics import ListCreateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView, \
     RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
@@ -49,9 +49,11 @@ class ordercreate(ListCreateAPIView):
 class CreateCategory(CreateAPIView):
     serializer_class= CategorySerializer
     queryset=Category.objects.all()
+
 class CreateItem(CreateAPIView):
     serializer_class= ItemSerialilzer
     queryset=MenuItem.objects.all()
+
 class TodaySpecial(APIView):
     serializer_class=TodaySerializer
     
@@ -72,13 +74,30 @@ class Popular(APIView):
     def get(self, *args, **kwargs):
         popular = MenuItem.objects.get(id=kwargs['pk'])
         popular.popular_item = True
-        popular.save()
+        Popular.save()
         return Response("Added")
 
 
 class PopularItems(ListAPIView):
     serializer_class = ItemSerialilzer
     queryset=MenuItem.objects.filter(popular_item=True)
+
+class Offer(APIView):
+    serializer_class = OfferSerializer
+
+    def get(self,*args, **kwargs):
+        offer = MenuItem.objects.get(id=kwargs['pk'])
+        offer.offer_item = True
+        offer.save()
+        return Response("Added")
+
+class OfferItems(ListAPIView):
+    serializer_class = ItemSerialilzer
+    queryset = MenuItem.objects.filter(offer_item=True)
+
+
+
+
 
 
 

@@ -18,5 +18,8 @@ urlpatterns = [
   path('login/', LoginAPI.as_view(), name='login'), # Admin
   path('Popular/<int:pk>', Popular.as_view()),
   path('PopularItem', PopularItems.as_view()),
+  path('Offer/<int:pk>',Offer.as_view()),
+  path('OfferItem',OfferItems.as_view()),
+
 
 ]

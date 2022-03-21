@@ -52,6 +52,22 @@ class PopularSerializer(serializers.ModelSerializer):
         fields = ['popular_item']
 
 
+class OfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MenuItem
+        fields = ['offer_item']
+
+
+
+
+
+
+
+
+
+
+
+
 
 # User Serializer
 
