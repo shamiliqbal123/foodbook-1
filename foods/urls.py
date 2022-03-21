@@ -15,7 +15,8 @@ urlpatterns = [
   path('to/<int:pk>',TodaySpecial.as_view()),#Admin
   path('too',TodaySpecialItems.as_view()),#Admin
   path('register/', RegisterAPI.as_view(), name='register'),
-  path('login/', LoginAPI.as_view(), name='login'),  # Admin
-  path('PopularItem', PopularItem.as_view()),
-  path('PopularItemView/<int:id>',PopularItemViews.as_view()),
+  path('login/', LoginAPI.as_view(), name='login'), # Admin
+  path('Popular/<int:pk>', Popular.as_view()),
+  path('PopularItem', PopularItems.as_view()),
+
 ]

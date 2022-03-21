@@ -29,6 +29,7 @@ class ItemApiView(ListAPIView):
     
     def get_queryset(self):
         return MenuItem.objects.filter(category=self.kwargs['pk'])
+
 class OrderView(ListAPIView):
     serializer_class=OrderSerialilzer
     queryset=OrderStatus.objects.all()
@@ -64,26 +65,20 @@ class TodaySpecialItems(ListAPIView):
     serializer_class=ItemSerialilzer
     queryset=MenuItem.objects.filter(today_special=True)
 
-class PopularItem(CreateAPIView):
-    serializer_class= PopularSerializer
-    queryset=MenuItem.objects.all()
+
+class Popular(APIView):
+    serializer_class = PopularSerializer
+
+    def get(self, *args, **kwargs):
+        popular = MenuItem.objects.get(id=kwargs['pk'])
+        popular.popular_item = True
+        popular.save()
+        return Response("Added")
 
 
-class PopularItemViews(APIView):
-    ...
-
-    def get(self, request, id=None):
-        if id:
-            item = MenuItem.objects.get(id=id)
-            serializer = PopularSerializer(item)
-            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-
-        items = MenuItem.objects.all()
-        serializer = PopularSerializer(items, many=True)
-        return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-
-
-
+class PopularItems(ListAPIView):
+    serializer_class = ItemSerialilzer
+    queryset=MenuItem.objects.filter(popular_item=True)
 
 
 

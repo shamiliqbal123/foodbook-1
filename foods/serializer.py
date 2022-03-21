@@ -10,20 +10,24 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model=Category
         fields="__all__"
+
 class ItemSerialilzer(serializers.ModelSerializer):
     class Meta:
         model=MenuItem
         fields="__all__"
+
 class OrderSerialilzer(serializers.ModelSerializer):
     class Meta:
         model=OrderStatus
         fields="__all__"
+
 class OrderItemSerializer(serializers.ModelSerializer):
     id=serializers.IntegerField(required=False)
     class Meta:
         model=OrderItems
         fields=['id','item_quantity','item_total','item','order']
         read_only_fields=('order',)
+
 class ordercreate(serializers.ModelSerializer):
     OrderItemss=OrderItemSerializer(many=True)
     class Meta:
@@ -36,6 +40,7 @@ class ordercreate(serializers.ModelSerializer):
         for orderitem in OrderItemss:
             OrderItems.objects.create(**orderitem,order=order)
         return order
+
 class TodaySerializer(serializers.ModelSerializer):
     class Meta:
         model=MenuItem
@@ -44,10 +49,7 @@ class TodaySerializer(serializers.ModelSerializer):
 class PopularSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
-        fields = ('item_name', 'item_image', 'item_price')
-
-
-
+        fields = ['popular_item']
 
 
 
